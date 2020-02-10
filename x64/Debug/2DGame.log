@@ -1,0 +1,2 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(1274,5): warning MSB8012: TargetPath(C:\repos\C++\Cpp_solution\x64\Debug\2DGame.exe) does not match the Linker's OutputFile property value (C:\repos\C++\Cpp_solution\2DGame\bin\2DGame.exe). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+  2DGame.vcxproj -> C:\repos\C++\Cpp_solution\x64\Debug\2DGame.exe
