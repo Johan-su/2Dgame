@@ -137,7 +137,7 @@ extern DECLSPEC SDL_Surface *SDLCALL SDL_CreateRGBSurfaceWithFormat
 
 extern DECLSPEC SDL_Surface *SDLCALL SDL_CreateRGBSurfaceFrom(void *pixels,
                                                               int width,
-                                                              int height,
+                                                               int height,
                                                               int depth,
                                                               int pitch,
                                                               Uint32 Rmask,

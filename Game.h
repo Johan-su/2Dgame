@@ -1,25 +1,38 @@
 #pragma once
 #include "SDL.h"
 #include <iostream>
+#include "Player.h"
+
+static SDL_Event e;
+static SDL_Renderer* renderer;
 
 class Game {
 public:
 	Game();
-	~Game();
+	//~Game();
 
 	void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
 
-	void HandleEvents();
+	void Events();
 	void update();
 	void render();
 	void clean();
+	void load();
 
-	bool running() { return isRunning; }
+	void keyEvent(int keycode, bool press);
+
+	
+
+	bool running() { return Running; }
+
+
+	Player* mainPlayer;
 
 private:
 	int cnt;
-	bool isRunning;
+	bool Running;
 	SDL_Window* window;
-	SDL_Renderer* renderer;
-
+	SDL_Surface* surface_texture_loader;
+	SDL_Texture* texture;
+	SDL_FRect rect;
 };

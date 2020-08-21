@@ -1,0 +1,35 @@
+[33mcommit 4374d38c7016ed93147589baa364b94ec2bd2940[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Johan Sundin <02JOS004@lulea.se>
+Date:   Fri Feb 14 13:12:41 2020 +0100
+
+    added  variables to player header file
+
+[33mcommit ceb04d66834b9c0f07b0ec78c292a8d25cdb2c17[m
+Author: Johan Sundin <02JOS004@lulea.se>
+Date:   Tue Feb 11 21:09:29 2020 +0100
+
+    removed .vs from repo
+
+[33mcommit 61d76cd8910c8ea2774c3ecca455eb468c109033[m
+Author: Johan Sundin <02JOS004@lulea.se>
+Date:   Tue Feb 11 20:07:32 2020 +0100
+
+    fixed so it doesnt git unessesary files
+
+[33mcommit 432863dffa7c0bb66d5998297fa59241d33dd205[m
+Author: Johan Sundin <02JOS004@lulea.se>
+Date:   Tue Feb 11 18:25:04 2020 +0100
+
+    fixed adding classes
+
+[33mcommit 832ab6613f576a80a0c23b2b65e5773048b318ee[m
+Author: Johan Sundin <02JOS004@lulea.se>
+Date:   Tue Feb 11 15:05:14 2020 +0100
+
+    added classes
+
+[33mcommit 3bc890cba2ee441d97d0ad58c71485bdc3567e54[m
+Author: Johan-su <jsbollll@gmail.com>
+Date:   Mon Feb 10 22:54:07 2020 +0100
+
+    first commit
