@@ -44,9 +44,6 @@ protected:
 
 	float m_maxHP;
 	float m_HP;
-
-private:
-
-	static SDL_Texture* texture; // TODO: fix linker error
-
+	
+	static SDL_Texture* texture;
 };

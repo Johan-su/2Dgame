@@ -103,7 +103,7 @@ void Player::render()
 
 void Player::move_update()
 {
-	if (abs(m_rotation) >= 6.28318530718f) m_rotation = 0.0f;
+	if (abs(m_rotation) >= 6.28318530718f) m_rotation = 0.0f; // 2x pi  = 0
 
 	m_position = Vector2f(cos(m_rotation) * m_velocity, sin(m_rotation) * m_velocity) + m_position;
 	Vector2f vec1 = { 1, 2 };
@@ -125,3 +125,5 @@ void Player::lvlup()
 		++m_lvl;
 	}
 }
+
+SDL_Texture* Player::texture;

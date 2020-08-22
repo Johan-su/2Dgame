@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Game.h"
 #include "Player.h"
+#include "Texture.h"
 
 // tutorial http://lazyfoo.net/tutorials/SDL/index.php
 
@@ -19,8 +20,8 @@ Game::Game()
 
 	rect.w = 100.0f;
 	rect.h = 100.0f;
-	rect.x = 0.0f;
-	rect.y = 0.0f;
+	rect.x = 10.0f;
+	rect.y = 10.0f;
 }
 
 /*Game::~Game() 
@@ -47,7 +48,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		if (renderer) {
 			//SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 			std::cout << "renderer created" << std::endl;
-			load();
+			load(); // test textures
+			Texture_list::get_Texture()->init(); // real textures
 		}
 
 		Running = true;
@@ -98,21 +100,23 @@ void Game::render()
 }
 void Game::clean()
 {
+	mainPlayer = nullptr;
+	surface_texture_loader = nullptr;
+
 	SDL_DestroyTexture(texture);
 	SDL_DestroyWindow(window);
-	surface_texture_loader = nullptr;
 
 	SDL_DestroyRenderer(renderer);
 
 	SDL_Quit();
 	std::cout << "game cleaned" << std::endl;
 }
-void Game::load()
+void Game::load() //TODO: change/remove temptest
 {
-	surface_texture_loader = SDL_LoadBMP("resources/texture/test_tile.bmp");
+	surface_texture_loader = SDL_LoadBMP("resources/texture/bmp/test_tile.bmp");
 	if (surface_texture_loader != NULL)
 	{
-		std::cout << "texture loaded" << std::endl;
+		std::cout << "TEMP texture loaded" << std::endl;
 		texture = SDL_CreateTextureFromSurface(renderer, surface_texture_loader);
 		SDL_FreeSurface(surface_texture_loader);
 		
