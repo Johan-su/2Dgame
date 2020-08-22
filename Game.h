@@ -3,8 +3,8 @@
 #include <iostream>
 #include "Player.h"
 
-static SDL_Event e;
-static SDL_Renderer* renderer;
+extern SDL_Event e;
+extern SDL_Renderer* renderer;
 
 class Game {
 public:

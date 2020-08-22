@@ -11,6 +11,7 @@ static void print(T t)
 	std::cout << t << std::endl;
 }
 
+
 Player::Player()
 	: Player(0.0f, 0.0f, 0.0f, 0.0f, 0.0f)
 {
@@ -22,7 +23,7 @@ Player::Player(const float& x, const float& y, const float& w, const float& h, c
 }
 
 Player::Player(const Vector2f& vec_pos, const Vector2f& vec_size, const float& rotation)
-	: m_forward(false), m_left(false), m_backward(false), m_right(false), m_maxHP(100.0f), m_HP(m_maxHP), m_lvl(0), m_srcrect({0, 0, 0, 0})
+	: m_forward(false), m_left(false), m_backward(false), m_right(false), m_lvl(0), m_srcrect({0, 0, 0, 0}), m_maxHP(100.0f), m_HP(m_maxHP)
 {
 	m_position = vec_pos;
 	m_size = vec_size;
@@ -81,15 +82,15 @@ void Player::update()
 	}
 	else if(m_backward)
 	{
-		move_backward;
+		move_backward();
 	}
 	if (m_left)
 	{
-		move_left;
+		move_left();
 	}
 	else if (m_right)
 	{
-		move_right;
+		move_right();
 	}
 	move_update();
 	collision();
@@ -108,7 +109,7 @@ void Player::move_update()
 	Vector2f vec1 = { 1, 2 };
 	Vector2f vec2 = { -1, -2 };
 	auto vec3 = vec1 + vec2;
-	print(vec3);
+	vec3.print();
 	print("Player_move_Update expected 0, 0 ");
 }
 

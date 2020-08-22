@@ -41,8 +41,12 @@ protected:
 	uint8_t m_lvl;
 
 	SDL_Rect m_srcrect;
-	static SDL_Texture* texture;
 
 	float m_maxHP;
 	float m_HP;
+
+private:
+
+	static SDL_Texture* texture; // TODO: fix linker error
+
 };

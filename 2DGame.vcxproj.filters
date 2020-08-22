@@ -60,6 +60,9 @@
     <ClCompile Include="Effect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Vector2i.cpp">
+      <Filter>Source Files\Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -88,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="Effect.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2i.h">
+      <Filter>Header Files\Data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

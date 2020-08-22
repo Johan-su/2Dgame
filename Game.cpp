@@ -58,7 +58,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 
 
-void Game::Events() // TODO: finalize keyhandling
+void Game::Events()
 {
 	while (SDL_PollEvent(&e) != 0) 
 	{
