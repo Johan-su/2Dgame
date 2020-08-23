@@ -1,7 +1,10 @@
 #pragma once
-#include "SDL.h"
 #include <iostream>
+#include <vector>
+#include <memory>
+#include "SDL.h"
 #include "Player.h"
+#include "Effect.h"
 
 extern SDL_Event e;
 extern SDL_Renderer* renderer;
@@ -9,7 +12,6 @@ extern SDL_Renderer* renderer;
 class Game {
 public:
 	Game();
-	//~Game();
 
 	void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
 
@@ -21,6 +23,9 @@ public:
 
 	void keyEvent(int keycode, bool press);
 
+	void add_effect(const Vector2f& vec_pos, const uint8_t& type);
+
+
 	
 
 	bool running() { return Running; }
@@ -28,8 +33,12 @@ public:
 
 	Player* mainPlayer;
 
+	std::vector<Entity*> entity_list;
+	std::vector<Effect*> effect_list;
+
+
+
 private:
-	int cnt;
 	bool Running;
 	SDL_Window* window;
 	SDL_Surface* surface_texture_loader;

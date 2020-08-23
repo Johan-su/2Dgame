@@ -1,7 +1,8 @@
 #pragma once
 #include <SDL.h>
+#include "Entity.h"
 
-class Enemy
+class Enemy : Entity
 {
 private:
 	static SDL_Texture* texture;

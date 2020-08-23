@@ -4,9 +4,7 @@
 
 class Entity
 {
-protected:
-
-	Entity();
+public:
 
 	Vector2f getPosition() const { return m_position; }
 	Vector2f getSize() const { return m_size; }
@@ -17,6 +15,11 @@ protected:
 
 	virtual void update() = 0;
 	virtual void render() = 0;	
+protected:
+	Entity();
+
+
+
 
 	Vector2f m_position;
 	Vector2f m_size;

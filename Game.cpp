@@ -2,7 +2,13 @@
 #include "Game.h"
 #include "Player.h"
 #include "Texture.h"
+#include "Entity.h"
 
+template<typename T>
+static void print(T t)
+{
+	std::cout << t << std::endl;
+}
 // tutorial http://lazyfoo.net/tutorials/SDL/index.php
 
 SDL_Renderer* renderer = nullptr;
@@ -10,7 +16,6 @@ SDL_Event e;
 
 Game::Game() 
 {
-	cnt = 0;
 	Running = false;
 
 	window = nullptr;
@@ -23,11 +28,6 @@ Game::Game()
 	rect.x = 10.0f;
 	rect.y = 10.0f;
 }
-
-/*Game::~Game() 
-{
-
-}*/
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
@@ -48,16 +48,16 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		if (renderer) {
 			//SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 			std::cout << "renderer created" << std::endl;
+			Texture_list::get_Texture(); // real textures
 			load(); // test textures
-			Texture_list::get_Texture()->init(); // real textures
 		}
 
 		Running = true;
+		add_effect(Vector2f({ 50.0f, 50.0f }), EFFECT_SHIP_EXPLOSION);
 	} else {
 		Running = false;
 	}
 }
-
 
 
 void Game::Events()
@@ -84,17 +84,31 @@ void Game::Events()
 
 void Game::update() 
 {
-	//cnt++;
-	//std::cout << "counter :" << cnt << std::endl;
+	for (Effect* e : effect_list)
+	{
+		e->update();
+	}
+	for (Entity* e : entity_list)
+	{
+		e->update();
+	}
 }
 void Game::render() 
 {
 	SDL_RenderClear(renderer);
 
-	if (SDL_RenderCopyF(renderer, texture, NULL, &rect) == -1)
+	SDL_RenderCopyF(renderer, texture, NULL, &rect);
+
+
+	for (Effect* e : effect_list)
 	{
-		std::cout << "rendercopy failing" << std::endl;
+		e->render();
 	}
+	for (Entity* e : entity_list)
+	{
+		e->render();
+	}
+
 
 	SDL_RenderPresent(renderer);
 }
@@ -113,14 +127,20 @@ void Game::clean()
 }
 void Game::load() //TODO: change/remove temptest
 {
-	surface_texture_loader = SDL_LoadBMP("resources/texture/bmp/test_tile.bmp");
+	/*surface_texture_loader = SDL_LoadBMP("resources/texture/bmp/test_tile.bmp");
 	if (surface_texture_loader != NULL)
 	{
 		std::cout << "TEMP texture loaded" << std::endl;
 		texture = SDL_CreateTextureFromSurface(renderer, surface_texture_loader);
 		SDL_FreeSurface(surface_texture_loader);
 		
+	}*/
+	texture = Texture_list::get_Texture()->m_t;
+	if (texture == (Texture_list::get_Texture()->m_t))
+	{
+		std::cout << "texture equality" << std::endl;
 	}
+	
 }
 void Game::keyEvent(int keycode, bool press)
 {
@@ -164,8 +184,20 @@ void Game::keyEvent(int keycode, bool press)
 			break;
 		}
 		break;
+	case SDLK_F7:
+		if (press)
+		{
+			add_effect(mainPlayer->getPosition(), EFFECT_SHIP_EXPLOSION);
+			break;
+		}
+		break;
 
 	default:
 		break;
 	}
+}
+
+void Game::add_effect(const Vector2f& vec_pos, const uint8_t& type)
+{
+	effect_list.push_back(Effect::create_effect(vec_pos, type));
 }

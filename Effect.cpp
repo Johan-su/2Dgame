@@ -11,16 +11,16 @@ static void print(T t)
 }
 
 Effect::Effect()
-	:m_x(0), m_y(0), src_rect({ 0, 0, 0, 0 })
+	: count(0), m_pos({0.0f, 0.0f}), src_rect({ 0, 0, 0, 0 })
 {
-	print("effect default ctor");
+	//print("effect default ctor");
 }
 Effect::~Effect()
 {
-	//TODO: add removal of, pointer to effect
+	//TODO: add removal of, pointer to effect or something else.
 }
 
-Effect* Effect::createEffect(const float& x, const float& y, const uint8_t& type)
+Effect* Effect::create_effect(const Vector2f& vec_pos, const uint8_t& type)
 {
 	switch (type)
 	{
@@ -28,10 +28,10 @@ Effect* Effect::createEffect(const float& x, const float& y, const uint8_t& type
 		return nullptr;
 		break;
 	case (EFFECT_SHIP_EXPLOSION):
-		return new Explosion_ship(x, y);
+		return new Explosion_ship(vec_pos);
 		break;
 	case (EFFECT_BULLET_HIT):
-		return new Hit_bullet(x, y);
+		return new Hit_bullet(vec_pos);
 		break;
 	default:
 		throw "Unknown Effect type";
@@ -41,23 +41,26 @@ Effect* Effect::createEffect(const float& x, const float& y, const uint8_t& type
 }
 //----------------------------------------------------------------------------Explosion_ship
 Explosion_ship::Explosion_ship()
-	: Explosion_ship::Explosion_ship(0.0f, 0.0f)
+	: Explosion_ship::Explosion_ship(Vector2f{ 0.0f, 0.0f })
 {
 }
 
-Explosion_ship::Explosion_ship(const float& x, const float& y)
-	: dest_rect({ x, y, 4.0f, 4.0f }) //TODO: determine real size of ship
+Explosion_ship::Explosion_ship(const Vector2f& vec_pos)
+	: dest_rect({ vec_pos.getX(), vec_pos.getY(), 4.0f, 4.0f }) // TODO: determine real size of ship change 4.0f, 4.0f
 {
+	count = 0;
 	src_rect = { 0, 0, 96, 12 };
-	m_x = x;
-	m_y = y;
-	texture = Texture_list::get_Texture()->texture_array[0];
+
 	print("explosion ship ctor");
 }
 void Explosion_ship::update()
 {
-	print("expl update");
-	next_state();
+	//print("expl update");
+	if (count == 1200)
+	{
+	//next_state();
+	count = 0;
+	}
 }
 
 void Explosion_ship::next_state()
@@ -73,22 +76,23 @@ void Explosion_ship::next_state()
 
 void Explosion_ship::render()
 {
-	SDL_RenderCopyF(renderer, texture, &src_rect, &dest_rect);
+	if (SDL_RenderCopyF(renderer, Texture_list::get_Texture()->texture_array, &src_rect, &dest_rect) == -1)
+	{
+		//std::cout << "expship render failed" << std::endl;
+	}
 }
-SDL_Texture* Explosion_ship::texture = ; // TODO: fix problem look in texture.cpp/h
 
 
 //----------------------------------------------------------------------------Explosion_ship end
 Hit_bullet::Hit_bullet()
-	: Hit_bullet::Hit_bullet(0.0f, 0.0f)
+	: Hit_bullet::Hit_bullet(Vector2f{ 0.0f, 0.0f })
 {
 }
 
-Hit_bullet::Hit_bullet(const float& x, const float& y)
-	: destrect({x, y, 4.0f, 4.0f}) //TODO: determine real size of bullet
+Hit_bullet::Hit_bullet(const Vector2f& vec_pos)
+	: dest_rect({ vec_pos.getX(), vec_pos.getY(), 4.0f, 4.0f}) //TODO: determine real size of bullet hit
 {
-	m_x = x;
-	m_y = y;
+	count = 0;
 	print("hit bullet ctor");
 }
 
@@ -101,4 +105,10 @@ void Hit_bullet::next_state()
 {
 
 }
+void Hit_bullet::render()
+{
+	SDL_RenderCopyF(renderer, texture, &src_rect, &dest_rect);
+}
+SDL_Texture* Hit_bullet::texture = Texture_list::get_Texture()->texture_array; //TODO: add offset to correct texture in list
+
 

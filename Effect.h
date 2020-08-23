@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#include "Vector2f.h"
 enum Effect_types
 {
 	EFFECT_DUMMY,
@@ -12,14 +13,15 @@ class Effect
 {
 public:
 	Effect();
-	static Effect* createEffect(const float& x, const float& y, const uint8_t& type);
+	~Effect();
+	static Effect* create_effect(const Vector2f& vec_pos, const uint8_t& type);
 
 	virtual void update() = 0;
 	virtual void next_state() = 0;
 	virtual void render() = 0;
 protected:
-	virtual ~Effect();
-	float m_x, m_y;
+	uint8_t count;
+	Vector2f m_pos;
 	SDL_Rect src_rect;
 
 };
@@ -28,14 +30,13 @@ class Explosion_ship : public Effect
 {
 public:
 	Explosion_ship();
-	Explosion_ship(const float& x, const float& y);
+	Explosion_ship(const Vector2f& vec_pos);
 
-	void update();
-	void next_state();
-	void render();
+	void update() override;
+	void next_state() override;
+	void render() override;
 protected:
-	static const unsigned int TEXTURE_OFFSET = 8; // TODO: add offset
-	static SDL_Texture* texture;
+	//static SDL_Texture* texture;
 	SDL_FRect dest_rect;
 };
 
@@ -43,12 +44,13 @@ class Hit_bullet : public Effect
 {
 public:
 	Hit_bullet();
-	Hit_bullet(const float& x, const float& y);
+	Hit_bullet(const Vector2f& vec_pos);
 
-	void update();
-	void next_state();
+	void update() override;
+	void next_state() override;
+	void render() override;
 protected:
 	static const uint16_t TEXTURE_OFFSET; // TODO: add offset
 	static SDL_Texture* texture;
-	SDL_FRect destrect;
+	SDL_FRect dest_rect;
 };

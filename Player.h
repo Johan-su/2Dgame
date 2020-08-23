@@ -5,7 +5,7 @@
 
 //static const float PI = 3.1415926f;
 
-class Player : Entity
+class Player : public Entity
 {
 public:
 	Player();
