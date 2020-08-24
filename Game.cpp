@@ -128,8 +128,9 @@ void Game::clean()
 }
 void Game::load() //TODO: change/remove temptest
 {
-	auto t = *(Texture_list::get_Texture()).texture_array;
-	texture = t[0];
+	auto t = Texture_list::get_Texture();
+	auto bt = *t;
+	texture = bt.texture_array[0];
 	/*surface_texture_loader = SDL_LoadBMP("resources/texture/bmp/test_tile.bmp");
 	if (surface_texture_loader != NULL)
 	{
