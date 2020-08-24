@@ -76,7 +76,7 @@ void Explosion_ship::next_state()
 
 void Explosion_ship::render()
 {
-	if (SDL_RenderCopyF(renderer, Texture_list::get_Texture()->texture_array, &src_rect, &dest_rect) == -1)
+	if (SDL_RenderCopyF(renderer, NULL, &src_rect, &dest_rect) == -1)
 	{
 		//std::cout << "expship render failed" << std::endl;
 	}
@@ -109,6 +109,6 @@ void Hit_bullet::render()
 {
 	SDL_RenderCopyF(renderer, texture, &src_rect, &dest_rect);
 }
-SDL_Texture* Hit_bullet::texture = Texture_list::get_Texture()->texture_array; //TODO: add offset to correct texture in list
+SDL_Texture* Hit_bullet::texture = Texture_list::get_Texture_list()->get_texture(0); //TODO:changed hit_bullet texture ,add offset to correct texture in list
 
 

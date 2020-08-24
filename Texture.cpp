@@ -1,6 +1,7 @@
+#include <iostream>
+#include <vector>
 #include "Texture.h"
 #include "Game.h"
-
 template<typename T>
 static void print(T t)
 {
@@ -8,23 +9,35 @@ static void print(T t)
 }
 
 Texture_list::Texture_list()
-	: texture_array(), surface_texture_loader(nullptr)
+	: texture_array(new std::vector<SDL_Texture*>), surface_texture_loader(nullptr)
 {
 
 }
 void Texture_list::init()
 {
 
-	SDL_Texture* texture_array[100]; //TODO: change to correct array size
-	texture_array[0] = load_img("resources/texture/bmp/test_tile.bmp");
-
-	//m_t = load_img("resources/texture/bmp/test_tile.bmp");
-	if (texture_array[0] == nullptr)
-	{
-	std::cout << "texture_array[0] == nullptr" << std::endl;
-	}
+	texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
+	texture_array->push_back(load_img("resources/texture/bmp/backgrounds/Space_background.bmp"));
+	/*texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
+	texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
+	texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
+	texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
+	texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
+	texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
+	texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
+	texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));*/
 }
-Texture_list* Texture_list::get_Texture()
+SDL_Texture* Texture_list::get_texture(const unsigned int& element)
+{
+	if (element >= texture_array->size())
+	{
+		std::cout << "element out of bounds for list" << std::endl;
+		return;
+	}
+	return texture_array->at(element);
+}
+
+Texture_list* Texture_list::get_Texture_list()
 {
 	static Texture_list* instance = new Texture_list();
 	return instance;
@@ -36,11 +49,6 @@ SDL_Texture* Texture_list::load_img(const char* path)
 	if (surface_texture_loader != NULL)
 	{
 		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface_texture_loader);
-		if (renderer == nullptr)
-		{
-			print("renderer failed");
-			return nullptr;
-		}
 		if (texture == nullptr)
 		{
 			print("texture failed");
@@ -51,6 +59,6 @@ SDL_Texture* Texture_list::load_img(const char* path)
 		return texture;
 
 	}
-	std::cout << path << " failed to load" << std::endl;
+	std::cout << path << " failed to load, path maybe wrong?" << std::endl;
 	return nullptr;
 }

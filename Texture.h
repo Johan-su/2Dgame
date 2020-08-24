@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#include <vector>
 class Texture_list
 {
 public:
@@ -12,17 +13,19 @@ public:
 
 
 
-	SDL_Texture* texture_array;
 
 
-	SDL_Texture* m_t;
+	std::vector<SDL_Texture*>* texture_array;
+
 
 
 	void init();
-	static Texture_list* get_Texture();
+	SDL_Texture* get_texture(const unsigned int& element);
+	static Texture_list* get_Texture_list();
 private:
 	SDL_Texture* load_img(const char* path);
 	Texture_list();
+
 
 	SDL_Surface* surface_texture_loader;
 };

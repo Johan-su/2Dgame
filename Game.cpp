@@ -48,7 +48,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		if (renderer) {
 			//SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 			std::cout << "renderer created" << std::endl;
-			Texture_list::get_Texture()->init(); // real textures
+			Texture_list::get_Texture_list()->init(); // real textures
 			std::cout << "texture-list initalized" << std::endl;
 			load(); // test textures
 		}
@@ -128,9 +128,13 @@ void Game::clean()
 }
 void Game::load() //TODO: change/remove temptest
 {
-	auto t = Texture_list::get_Texture();
-	auto bt = *t;
-	texture = bt.texture_array[0];
+	texture = Texture_list::get_Texture_list()->get_texture(1);
+	if (texture == nullptr)
+	{
+		print("texture was nulllptr in game");
+		texture = nullptr;
+	}
+	
 	/*surface_texture_loader = SDL_LoadBMP("resources/texture/bmp/test_tile.bmp");
 	if (surface_texture_loader != NULL)
 	{
