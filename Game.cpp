@@ -48,7 +48,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		if (renderer) {
 			//SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 			std::cout << "renderer created" << std::endl;
-			Texture_list::get_Texture(); // real textures
+			Texture_list::get_Texture()->init(); // real textures
+			std::cout << "texture-list initalized" << std::endl;
 			load(); // test textures
 		}
 
@@ -97,8 +98,9 @@ void Game::render()
 {
 	SDL_RenderClear(renderer);
 
-	SDL_RenderCopyF(renderer, texture, NULL, &rect);
+	SDL_RenderCopyF(renderer, texture, NULL, NULL);
 
+	SDL_RenderPresent(renderer);
 
 	for (Effect* e : effect_list)
 	{
@@ -110,7 +112,6 @@ void Game::render()
 	}
 
 
-	SDL_RenderPresent(renderer);
 }
 void Game::clean()
 {
@@ -127,19 +128,25 @@ void Game::clean()
 }
 void Game::load() //TODO: change/remove temptest
 {
+	auto t = *(Texture_list::get_Texture()).texture_array;
+	texture = t[0];
 	/*surface_texture_loader = SDL_LoadBMP("resources/texture/bmp/test_tile.bmp");
 	if (surface_texture_loader != NULL)
 	{
 		std::cout << "TEMP texture loaded" << std::endl;
 		texture = SDL_CreateTextureFromSurface(renderer, surface_texture_loader);
+		if (renderer != nullptr)
+		{
+			print("renderer worked in game");
+		}
 		SDL_FreeSurface(surface_texture_loader);
 		
 	}*/
-	texture = Texture_list::get_Texture()->m_t;
+	/*texture = Texture_list::get_Texture()->m_t;
 	if (texture == (Texture_list::get_Texture()->m_t))
 	{
 		std::cout << "texture equality" << std::endl;
-	}
+	}*/
 	
 }
 void Game::keyEvent(int keycode, bool press)

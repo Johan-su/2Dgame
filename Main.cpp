@@ -13,17 +13,6 @@ static void print(T t)
 	std::cout << t << std::endl;
 }
 
-class rr
-{
-	int x;
-public:
-	int getX()
-	{
-		return x;
-	}
-
-};
-
 //Player p;
 Game *game = nullptr;
 

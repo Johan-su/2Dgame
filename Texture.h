@@ -16,6 +16,9 @@ public:
 
 
 	SDL_Texture* m_t;
+
+
+	void init();
 	static Texture_list* get_Texture();
 private:
 	SDL_Texture* load_img(const char* path);
