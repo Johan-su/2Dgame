@@ -46,8 +46,9 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		}
 		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 		if (renderer) {
-			//SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 			std::cout << "renderer created" << std::endl;
+			//SDL_RenderSetLogicalSize(renderer, 16, 9);
+			//std::cout << "renderer scaled" << std::endl;
 			Texture_list::get_Texture_list()->init(); // real textures
 			std::cout << "texture-list initalized" << std::endl;
 			load(); // test textures

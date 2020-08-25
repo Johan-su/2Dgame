@@ -8,8 +8,17 @@ static void print(T t)
 	std::cout << t << std::endl;
 }
 
+enum Textures
+{
+	TEST_TILE,
+	SPACE_BACKGROUND,
+	SHIP_SHEET,
+	BULLET_SHEET
+};
+
+
 Texture_list::Texture_list()
-	: surface_texture_loader(nullptr)
+	: texture_array(nullptr), surface_texture_loader(nullptr)
 {
 
 }
@@ -18,14 +27,14 @@ void Texture_list::init()
 	texture_array = new std::vector<SDL_Texture*>;
 	texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
 	texture_array->push_back(load_img("resources/texture/bmp/backgrounds/Space_background.bmp"));
-	/*texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
-	texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
-	texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
-	texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
-	texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
-	texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
-	texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
-	texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));*/
+	texture_array->push_back(load_img("resources/texture/bmp/space_ships/ships_sheet.bmp"));
+	texture_array->push_back(load_img("resources/texture/bmp/projectiles/bullets_sheet.bmp"));
+	//texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
+	//texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
+	//texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
+	//texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
+	//texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
+	//texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
 }
 SDL_Texture* Texture_list::get_texture(const unsigned int& element)
 {
