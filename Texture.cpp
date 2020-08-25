@@ -9,13 +9,13 @@ static void print(T t)
 }
 
 Texture_list::Texture_list()
-	: texture_array(new std::vector<SDL_Texture*>), surface_texture_loader(nullptr)
+	: surface_texture_loader(nullptr)
 {
 
 }
 void Texture_list::init()
 {
-
+	texture_array = new std::vector<SDL_Texture*>;
 	texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
 	texture_array->push_back(load_img("resources/texture/bmp/backgrounds/Space_background.bmp"));
 	/*texture_array->push_back(load_img("resources/texture/bmp/test_tile.bmp"));
@@ -32,7 +32,7 @@ SDL_Texture* Texture_list::get_texture(const unsigned int& element)
 	if (element >= texture_array->size())
 	{
 		std::cout << "element out of bounds for list" << std::endl;
-		return;
+		return nullptr;
 	}
 	return texture_array->at(element);
 }

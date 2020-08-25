@@ -109,6 +109,6 @@ void Hit_bullet::render()
 {
 	SDL_RenderCopyF(renderer, texture, &src_rect, &dest_rect);
 }
-SDL_Texture* Hit_bullet::texture = Texture_list::get_Texture_list()->get_texture(0); //TODO:changed hit_bullet texture ,add offset to correct texture in list
+SDL_Texture* Hit_bullet::texture;// = Texture_list::get_Texture_list()->get_texture(0); //TODO:changed hit_bullet texture ,add offset to correct texture in list
 
 
