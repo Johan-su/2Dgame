@@ -13,7 +13,6 @@ static void print(T t)
 	std::cout << t << std::endl;
 }
 
-//Player p;
 Game *game = nullptr;
 
 int main(int argc, char* argv[]) {
@@ -41,7 +40,7 @@ int main(int argc, char* argv[]) {
 	
 
 	game = new Game();
-	game->init("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 500, 500, 0);
+	game->init("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, 0);
 
 	auto MS_PER_UPDATE = std::chrono::nanoseconds(16666666);
 
@@ -68,6 +67,5 @@ int main(int argc, char* argv[]) {
 	game->clean();
 
 	delete game;
-	std::cin;
 	return 0;
 }

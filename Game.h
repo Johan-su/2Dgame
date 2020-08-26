@@ -26,8 +26,8 @@ public:
 
 	void add_effect(const Vector2f& vec_pos, const uint8_t& type);
 
-
-	
+	void clear_dead_effects();
+	void clear_dead_entities();
 
 	bool running() { return Running; }
 
@@ -42,7 +42,5 @@ public:
 private:
 	bool Running;
 	SDL_Window* window;
-	SDL_Surface* surface_texture_loader;
 	SDL_Texture* texture;
-	SDL_FRect rect;
 };

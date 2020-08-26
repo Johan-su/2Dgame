@@ -3,8 +3,7 @@
 #include "Vector2f.h"
 enum Effect_types
 {
-	EFFECT_DUMMY,
-	EFFECT_SHIP_EXPLOSION,
+	EFFECT_EXPLOSION,
 	EFFECT_BULLET_HIT,
 
 };
@@ -16,9 +15,13 @@ public:
 	~Effect();
 	static Effect* create_effect(const Vector2f& vec_pos, const uint8_t& type);
 
+	static void init();
+
+	static void clean();
 	virtual void update() = 0;
 	virtual void next_state() = 0;
 	virtual void render() = 0;
+	bool m_dead;
 protected:
 	uint8_t count;
 	Vector2f m_pos;
@@ -26,17 +29,18 @@ protected:
 
 };
 
-class Explosion_ship : public Effect
+class Explosion : public Effect
 {
 public:
-	Explosion_ship();
-	Explosion_ship(const Vector2f& vec_pos);
+	Explosion();
+	Explosion(const Vector2f& vec_pos);
 
 	void update() override;
 	void next_state() override;
 	void render() override;
+	static SDL_Texture* texture;
 protected:
-	//static SDL_Texture* texture;
+	unsigned int count;
 	SDL_FRect dest_rect;
 };
 
@@ -49,8 +53,8 @@ public:
 	void update() override;
 	void next_state() override;
 	void render() override;
+	static SDL_Texture* texture;
 protected:
 	static const uint16_t TEXTURE_OFFSET; // TODO: add offset
-	static SDL_Texture* texture;
 	SDL_FRect dest_rect;
 };

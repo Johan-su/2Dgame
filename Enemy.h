@@ -4,6 +4,7 @@
 
 class Enemy : Entity
 {
-private:
+public:
 	static SDL_Texture* texture;
+private:
 };

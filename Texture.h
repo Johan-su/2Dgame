@@ -22,6 +22,7 @@ public:
 	void init();
 	SDL_Texture* get_texture(const unsigned int& element);
 	static Texture_list* get_Texture_list();
+	void clean();
 private:
 	SDL_Texture* load_img(const char* path);
 	Texture_list();

@@ -5,6 +5,8 @@
 class Entity
 {
 public:
+	Entity();
+
 
 	Vector2f getPosition() const { return m_position; }
 	Vector2f getSize() const { return m_size; }
@@ -15,8 +17,10 @@ public:
 
 	virtual void update() = 0;
 	virtual void render() = 0;	
+	bool m_dead;
+
+	static void init();
 protected:
-	Entity();
 
 
 
@@ -27,7 +31,6 @@ protected:
 	float m_velocity;
 	float m_rotation;
 
-	bool m_dead;
 	
 
 	SDL_FRect m_render_box;

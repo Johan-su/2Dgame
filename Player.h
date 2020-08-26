@@ -36,6 +36,8 @@ public:
 	bool m_backward;
 	bool m_right;
 
+	static SDL_Texture* texture;
+	static SDL_Texture* btexture;
 protected:
 
 	uint8_t m_lvl;
@@ -45,5 +47,4 @@ protected:
 	float m_maxHP;
 	float m_HP;
 	
-	static SDL_Texture* texture;
 };

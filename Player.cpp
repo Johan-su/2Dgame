@@ -23,7 +23,7 @@ Player::Player(const float& x, const float& y, const float& w, const float& h, c
 }
 
 Player::Player(const Vector2f& vec_pos, const Vector2f& vec_size, const float& rotation)
-	: m_forward(false), m_left(false), m_backward(false), m_right(false), m_lvl(0), m_srcrect({0, 0, 0, 0}), m_maxHP(100.0f), m_HP(m_maxHP)
+	: m_forward(false), m_left(false), m_backward(false), m_right(false), m_lvl(0), m_srcrect({0, 0, 256, 278}), m_maxHP(100.0f), m_HP(m_maxHP)
 {
 	m_position = vec_pos;
 	m_size = vec_size;
@@ -42,6 +42,7 @@ void Player::damage(const float& x)
 	if (m_HP < 0)
 	{
 		m_dead = true;
+		return;
 	}
 	if (m_HP > m_maxHP)
 	{

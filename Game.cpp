@@ -1,4 +1,7 @@
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include "Game.h"
 #include "Player.h"
 #include "Texture.h"
@@ -19,14 +22,9 @@ Game::Game()
 	Running = false;
 
 	window = nullptr;
-	surface_texture_loader = nullptr;
 	texture = nullptr;
 	mainPlayer = nullptr;
 
-	rect.w = 100.0f;
-	rect.h = 100.0f;
-	rect.x = 10.0f;
-	rect.y = 10.0f;
 }
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
@@ -49,13 +47,13 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 			std::cout << "renderer created" << std::endl;
 			//SDL_RenderSetLogicalSize(renderer, 16, 9);
 			//std::cout << "renderer scaled" << std::endl;
-			Texture_list::get_Texture_list()->init(); // real textures
-			std::cout << "texture-list initalized" << std::endl;
 			load(); // test textures
+
 		}
 
 		Running = true;
-		add_effect(Vector2f({ 50.0f, 50.0f }), EFFECT_SHIP_EXPLOSION);
+
+
 	} else {
 		Running = false;
 	}
@@ -86,6 +84,9 @@ void Game::Events()
 
 void Game::update() 
 {
+	add_effect(Vector2f({ (float)(rand() % (102*6)),(float)(rand() % (57*6)) }), EFFECT_EXPLOSION);
+	//add_effect(Vector2f({40.0f, 40.0f}), EFFECT_SHIP_EXPLOSION);
+
 	for (Effect* e : effect_list)
 	{
 		e->update();
@@ -101,7 +102,6 @@ void Game::render()
 
 	SDL_RenderCopyF(renderer, texture, NULL, NULL);
 
-	SDL_RenderPresent(renderer);
 
 	for (Effect* e : effect_list)
 	{
@@ -112,12 +112,28 @@ void Game::render()
 		e->render();
 	}
 
+	SDL_RenderPresent(renderer);
 
 }
 void Game::clean()
 {
+	Texture_list::get_Texture_list()->clean();
+	Effect::clean();
+
 	mainPlayer = nullptr;
-	surface_texture_loader = nullptr;
+	for (int i = 0; i < effect_list.size(); ++i)
+	{
+		Effect* e = effect_list.at(i);
+		delete e;
+		effect_list.clear();
+	}
+
+	for (int i = 0; i < entity_list.size(); ++i)
+	{
+		Entity* e = entity_list.at(i);
+		delete e;
+		entity_list.clear();
+	}
 
 	SDL_DestroyTexture(texture);
 	SDL_DestroyWindow(window);
@@ -127,38 +143,24 @@ void Game::clean()
 	SDL_Quit();
 	std::cout << "game cleaned" << std::endl;
 }
-void Game::load() //TODO: change/remove temptest
+void Game::load()
 {
+	Texture_list::get_Texture_list()->init();
+	std::cout << "texture-list initalized" << std::endl;
+	Effect::init();
+	std::cout << "effect textures loaded" << std::endl;
+	Entity::init();
+	std::cout << "Entity textures initalized" << std::endl;
+
 	texture = Texture_list::get_Texture_list()->get_texture(1);
-	if (texture == nullptr)
-	{
-		print("texture was nulllptr in game");
-		texture = nullptr;
-	}
-	
-	/*surface_texture_loader = SDL_LoadBMP("resources/texture/bmp/test_tile.bmp");
-	if (surface_texture_loader != NULL)
-	{
-		std::cout << "TEMP texture loaded" << std::endl;
-		texture = SDL_CreateTextureFromSurface(renderer, surface_texture_loader);
-		if (renderer != nullptr)
-		{
-			print("renderer worked in game");
-		}
-		SDL_FreeSurface(surface_texture_loader);
-		
-	}*/
-	/*texture = Texture_list::get_Texture()->m_t;
-	if (texture == (Texture_list::get_Texture()->m_t))
-	{
-		std::cout << "texture equality" << std::endl;
-	}*/
-	
 }
 void Game::keyEvent(int keycode, bool press)
 {
 	switch (keycode)
 	{
+	case SDLK_ESCAPE:
+		Running = false;
+		break;
 	case SDLK_w:
 		if (press) 
 		{
@@ -200,7 +202,7 @@ void Game::keyEvent(int keycode, bool press)
 	case SDLK_F7:
 		if (press)
 		{
-			add_effect(mainPlayer->getPosition(), EFFECT_SHIP_EXPLOSION);
+			add_effect(mainPlayer->getPosition(), EFFECT_EXPLOSION);
 			break;
 		}
 		break;
@@ -213,4 +215,29 @@ void Game::keyEvent(int keycode, bool press)
 void Game::add_effect(const Vector2f& vec_pos, const uint8_t& type)
 {
 	effect_list.push_back(Effect::create_effect(vec_pos, type));
+}
+
+void Game::clear_dead_effects()
+{
+	for (int i = 0; i < effect_list.size(); ++i)
+	{
+		Effect* e = effect_list.at(i);
+		if (e->m_dead)
+		{
+			delete e;
+			effect_list.erase(effect_list.begin() + i);
+		}
+	}
+}
+void Game::clear_dead_entities()
+{
+	for (int i = 0; i < entity_list.size(); ++i)
+	{
+		Entity* e = entity_list.at(i);
+		if (e->m_dead)
+		{
+			delete e;
+			entity_list.erase(entity_list.begin() + i);
+		}
+	}
 }
