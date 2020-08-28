@@ -14,6 +14,7 @@ public:
 
 	Vector2f operator-(Vector2f& v2f) const;
 
+
 	void print();
 	
 

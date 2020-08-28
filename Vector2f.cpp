@@ -18,6 +18,8 @@ Vector2f Vector2f::operator-(Vector2f& v2f) const
 {
 	return Vector2f(m_x - v2f.m_x, m_y - v2f.m_y);
 }
+
+
 void Vector2f::print()
 {
 	std::cout << m_x << " x : " << m_y << " y" << std::endl;
