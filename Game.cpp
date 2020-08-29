@@ -1,7 +1,6 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include "Game.h"
 #include "Player.h"
 #include "Texture.h"
@@ -84,7 +83,10 @@ void Game::Events()
 
 void Game::update() 
 {
+	for (int i = 0; i < 2; ++i)
+	{
 	add_effect(Vector2f({ (float)(rand() % (102*6)),(float)(rand() % (57*6)) }), EFFECT_EXPLOSION);
+	}
 	//add_effect(Vector2f({40.0f, 40.0f}), EFFECT_SHIP_EXPLOSION);
 
 	for (Effect* e : effect_list)
@@ -153,6 +155,11 @@ void Game::load()
 	std::cout << "Entity textures initalized" << std::endl;
 
 	texture = Texture_list::get_Texture_list()->get_texture(1);
+	std::cout << "background loaded" << std::endl;
+
+	mainPlayer = new Player();
+	mainPlayer->set_ship(9);
+	entity_list.push_back(mainPlayer);
 }
 void Game::keyEvent(int keycode, bool press)
 {
@@ -180,7 +187,7 @@ void Game::keyEvent(int keycode, bool press)
 	case SDLK_s:
 		if (press)
 		{
-			mainPlayer->m_backward = false;
+			mainPlayer->m_backward = true;
 			break;
 		}
 		mainPlayer->m_backward = false;
@@ -199,7 +206,7 @@ void Game::keyEvent(int keycode, bool press)
 			break;
 		}
 		break;
-	case SDLK_F7:
+	case SDLK_r:
 		if (press)
 		{
 			add_effect(mainPlayer->getPosition(), EFFECT_EXPLOSION);

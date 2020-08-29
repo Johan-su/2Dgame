@@ -13,7 +13,7 @@ static void print(T t)
 
 
 Player::Player()
-	: Player(0.0f, 0.0f, 0.0f, 0.0f, 0.0f)
+	: Player(0.0f, 0.0f, 40.0f, 40.0f, 0.0f)
 {
 }
 
@@ -23,12 +23,11 @@ Player::Player(const float& x, const float& y, const float& w, const float& h, c
 }
 
 Player::Player(const Vector2f& vec_pos, const Vector2f& vec_size, const float& rotation)
-	: m_forward(false), m_left(false), m_backward(false), m_right(false), m_lvl(0), m_srcrect({0, 0, 256, 278}), m_maxHP(100.0f), m_HP(m_maxHP)
+	: count(0), m_forward(false), m_left(false), m_backward(false), m_right(false), m_ship(0), m_lvl(0), m_srcrect({0, 0, 256, 256}), m_maxHP(100.0f), m_HP(m_maxHP)
 {
 	m_position = vec_pos;
 	m_size = vec_size;
 	m_rotation = rotation;
-
 
 	m_render_box = { m_position.getX(), m_position.getY(), m_size.getX(), m_size.getY() };
 
@@ -62,7 +61,7 @@ void Player::move_forward()
 
 void Player::move_left()
 {
-	m_rotation += 0.02617993877f; // PI/60
+	m_rotation -= 0.06981317007f; // PI/45
 }
 
 void Player::move_backward()
@@ -72,7 +71,7 @@ void Player::move_backward()
 
 void Player::move_right()
 {
-	m_rotation -= 0.02617993877f; // PI/60
+	m_rotation += 0.06981317007f; // PI/45
 }
 
 void Player::update()
@@ -99,7 +98,21 @@ void Player::update()
 }
 void Player::render()
 {
-	SDL_RenderCopyExF(renderer, texture, &m_srcrect, &m_render_box, m_rotation, NULL, SDL_FLIP_NONE);
+	if (SDL_RenderCopyExF(renderer, texture, &m_srcrect, &m_render_box, (m_rotation * 57.2957795131) + 90, NULL, SDL_FLIP_NONE) == -1)
+	{
+		print("player render failed");
+	}
+	else
+	{
+		if (count == 1000)
+		{
+		print(m_rotation);
+		m_size.print();
+		m_position.print();
+		count = 0;
+		}
+		++count;
+	}
 }
 
 void Player::move_update()
@@ -107,15 +120,9 @@ void Player::move_update()
 	if (abs(m_rotation) >= 6.28318530718f) m_rotation = 0.0f; // 2x pi  = 0
 
 	m_position = Vector2f(cos(m_rotation) * m_velocity, sin(m_rotation) * m_velocity) + m_position;
+	m_render_box = { m_position.getX(), m_position.getY(), m_size.getX(), m_size.getY() };
+
 	m_velocity *= 0.98f; // friction
-
-
-
-	Vector2f vec1 = { 1, 2 };
-	Vector2f vec2 = { -1, -2 };
-	auto vec3 = vec1 + vec2;
-	vec3.print();
-	print("Player_move_Update expected 0, 0 ");
 }
 
 void Player::collision()
@@ -129,6 +136,16 @@ void Player::lvlup()
 	{
 		++m_lvl;
 	}
+}
+
+void Player::set_ship(const int& ship)
+{
+	if (ship > 9)
+	{
+		m_srcrect = { 0, 2560 + 384 * (ship - 10), 256, 384 };
+		return;
+	}
+	m_srcrect = { 0, ship * 256, 256, 256 };
 }
 
 SDL_Texture* Player::texture;

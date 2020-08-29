@@ -30,15 +30,19 @@ public:
 
 	void lvlup();
 
+	void set_ship(const int& ship);
+
+public:
 
 	bool m_forward;
 	bool m_left;
 	bool m_backward;
 	bool m_right;
+	int count;
 
 	static SDL_Texture* texture;
-	static SDL_Texture* btexture;
 protected:
+	uint8_t m_ship;
 
 	uint8_t m_lvl;
 

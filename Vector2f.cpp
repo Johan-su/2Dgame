@@ -22,5 +22,5 @@ Vector2f Vector2f::operator-(Vector2f& v2f) const
 
 void Vector2f::print()
 {
-	std::cout << m_x << " x : " << m_y << " y" << std::endl;
+	std::cout << "(" << m_x << ", " << m_y << ")" << std::endl;
 }
