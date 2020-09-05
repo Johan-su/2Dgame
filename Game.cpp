@@ -81,13 +81,12 @@ void Game::Events()
 	}
 }
 
-void Game::update() 
+void Game::update() // max 1920 effects per second
 {
-	for (int i = 0; i < 2; ++i)
+	for (int i = 0; i < 32; ++i)
 	{
 	add_effect(Vector2f({ (float)(rand() % (102*6)),(float)(rand() % (57*6)) }), EFFECT_EXPLOSION);
 	}
-	//add_effect(Vector2f({40.0f, 40.0f}), EFFECT_SHIP_EXPLOSION);
 
 	for (Effect* e : effect_list)
 	{
@@ -194,6 +193,14 @@ void Game::keyEvent(int keycode, bool press)
 			break;
 		}
 		mainPlayer->m_right = false;
+		break;
+	case SDLK_SPACE:
+		if (press)
+		{
+			mainPlayer->m_firing = true;
+			break;
+		}
+		mainPlayer->m_firing = false;
 		break;
 	case SDLK_LSHIFT:
 		if (press)

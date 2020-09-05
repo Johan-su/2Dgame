@@ -34,6 +34,7 @@ public:
 	bool m_left;
 	bool m_backward;
 	bool m_right;
+	bool m_firing;
 	int count;
 
 protected:

@@ -87,6 +87,10 @@ void Player::update()
 		count = 0;
 	}
 	++count;
+	if (m_firing)
+	{
+		fire();
+	}
 	if (m_forward)
 	{
 		move_forward();

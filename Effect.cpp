@@ -12,7 +12,7 @@ static void print(T t)
 }
 
 Effect::Effect()
-	: m_dead(false), count(0), m_pos({ 0.0f, 0.0f }), m_srcrect({ 0, 0, 0, 0 })
+	: m_dead(false), count(0), m_pos({ 0.0f, 0.0f }), m_destrect({0.0f, 0.0f, 0.0f, 0.0f}), m_srcrect({ 0, 0, 0, 0 }), m_texture(nullptr)
 {
 }
 Effect::~Effect()
@@ -50,7 +50,7 @@ Explosion::Explosion()
 }
 
 Explosion::Explosion(const Vector2f& vec_pos)
-	: count(0) // TODO: determine real size of ship change 4.0f, 4.0f
+	: count(0)
 {
 	m_destrect = { vec_pos.getX(), vec_pos.getY(), 160.0f, 160.0f };
 	m_texture = Texture_list::get_Texture_list()->get_texture(4);
