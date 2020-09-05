@@ -16,12 +16,15 @@ public:
 	bool isDead() const { return m_dead; }
 
 	virtual void update() = 0;
-	virtual void render() = 0;	
+	void move_update();
+	void collision();
+	void render();	
 	bool m_dead;
 
 	static void init();
+	SDL_Texture* texture;
 protected:
-
+	SDL_Rect m_srcrect;
 
 
 

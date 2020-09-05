@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Player.h"
 #include "Vector2f.h"
+#include "Texture.h"
 
 template<typename T>
 static void print(T t)
@@ -23,11 +24,13 @@ Player::Player(const float& x, const float& y, const float& w, const float& h, c
 }
 
 Player::Player(const Vector2f& vec_pos, const Vector2f& vec_size, const float& rotation)
-	: count(0), m_forward(false), m_left(false), m_backward(false), m_right(false), m_ship(0), m_lvl(0), m_srcrect({0, 0, 256, 256}), m_maxHP(100.0f), m_HP(m_maxHP)
+	: count(0), m_forward(false), m_left(false), m_backward(false), m_right(false), m_ship(0), m_lvl(0), m_maxHP(100.0f), m_HP(m_maxHP)
 {
+	m_srcrect = { 0, 0, 256, 256 };
 	m_position = vec_pos;
 	m_size = vec_size;
 	m_rotation = rotation;
+	texture = Texture_list::get_Texture_list()->get_texture(2);
 
 	m_render_box = { m_position.getX(), m_position.getY(), m_size.getX(), m_size.getY() };
 
@@ -76,6 +79,14 @@ void Player::move_right()
 
 void Player::update()
 {
+	if (count == 60)
+	{
+		print(m_rotation);
+		m_size.print();
+		m_position.print();
+		count = 0;
+	}
+	++count;
 	if (m_forward)
 	{
 		move_forward();
@@ -93,26 +104,13 @@ void Player::update()
 		move_right();
 	}
 	move_update();
+	m_velocity *= 0.98f; // friction
 	collision();
 
 }
-void Player::render()
+/*void Player::render()
 {
-	if (SDL_RenderCopyExF(renderer, texture, &m_srcrect, &m_render_box, (m_rotation * 57.2957795131) + 90, NULL, SDL_FLIP_NONE) == -1)
-	{
-		print("player render failed");
-	}
-	else
-	{
-		if (count == 1000)
-		{
-		print(m_rotation);
-		m_size.print();
-		m_position.print();
-		count = 0;
-		}
-		++count;
-	}
+	SDL_RenderCopyExF(renderer, texture, &m_srcrect, &m_render_box, (m_rotation * 57.2957795131) + 90, NULL, SDL_FLIP_NONE);
 }
 
 void Player::move_update()
@@ -122,13 +120,12 @@ void Player::move_update()
 	m_position = Vector2f(cos(m_rotation) * m_velocity, sin(m_rotation) * m_velocity) + m_position;
 	m_render_box = { m_position.getX(), m_position.getY(), m_size.getX(), m_size.getY() };
 
-	m_velocity *= 0.98f; // friction
 }
 
 void Player::collision()
 {
 
-}
+}*/
 
 void Player::lvlup()
 {
@@ -148,4 +145,3 @@ void Player::set_ship(const int& ship)
 	m_srcrect = { 0, ship * 256, 256, 256 };
 }
 
-SDL_Texture* Player::texture;

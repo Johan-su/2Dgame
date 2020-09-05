@@ -23,10 +23,7 @@ public:
 	void move_right();
 
 	void update() override;
-	void render() override;
 
-	void move_update();
-	void collision();
 
 	void lvlup();
 
@@ -40,13 +37,11 @@ public:
 	bool m_right;
 	int count;
 
-	static SDL_Texture* texture;
 protected:
 	uint8_t m_ship;
 
 	uint8_t m_lvl;
 
-	SDL_Rect m_srcrect;
 
 	float m_maxHP;
 	float m_HP;
