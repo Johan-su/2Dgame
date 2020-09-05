@@ -19,10 +19,12 @@ public:
 	void move_update();
 	void collision();
 	void render();	
-	bool m_dead;
 
-	static void init();
+public:
+
+	bool m_dead;
 	SDL_Texture* texture;
+
 protected:
 	SDL_Rect m_srcrect;
 

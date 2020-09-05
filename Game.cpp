@@ -120,7 +120,6 @@ void Game::render()
 void Game::clean()
 {
 	Texture_list::get_Texture_list()->clean();
-	Effect::clean();
 
 	mainPlayer = nullptr;
 	for (int i = 0; i < effect_list.size(); ++i)
@@ -149,10 +148,6 @@ void Game::load()
 {
 	Texture_list::get_Texture_list()->init();
 	std::cout << "texture-list initalized" << std::endl;
-	Effect::init();
-	std::cout << "effect textures loaded" << std::endl;
-	Entity::init();
-	std::cout << "Entity textures initalized" << std::endl;
 
 	texture = Texture_list::get_Texture_list()->get_texture(1);
 	std::cout << "background loaded" << std::endl;

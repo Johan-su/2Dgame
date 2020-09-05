@@ -14,21 +14,21 @@ static void print(T t)
 
 
 Player::Player()
-	: Player(0.0f, 0.0f, 40.0f, 40.0f, 0.0f)
+	: Player(0.0f, 0.0f, 0.0f)
 {
 }
 
-Player::Player(const float& x, const float& y, const float& w, const float& h, const float& rotation)
-	: Player(Vector2f(x, y), Vector2f(w, h), rotation)
+Player::Player(const float& x, const float& y, const float& rotation)
+	: Player(Vector2f(x, y), rotation)
 {
 }
 
-Player::Player(const Vector2f& vec_pos, const Vector2f& vec_size, const float& rotation)
+Player::Player(const Vector2f& vec_pos, const float& rotation)
 	: count(0), m_forward(false), m_left(false), m_backward(false), m_right(false), m_ship(0), m_lvl(0), m_maxHP(100.0f), m_HP(m_maxHP)
 {
 	m_srcrect = { 0, 0, 256, 256 };
 	m_position = vec_pos;
-	m_size = vec_size;
+	m_size = Vector2f({ 40.0f, 40.0f });
 	m_rotation = rotation;
 	texture = Texture_list::get_Texture_list()->get_texture(2);
 
@@ -64,7 +64,7 @@ void Player::move_forward()
 
 void Player::move_left()
 {
-	m_rotation -= 0.06981317007f; // PI/45
+	m_rotation-= 0.06981317007f; // PI/45
 }
 
 void Player::move_backward()
@@ -108,24 +108,6 @@ void Player::update()
 	collision();
 
 }
-/*void Player::render()
-{
-	SDL_RenderCopyExF(renderer, texture, &m_srcrect, &m_render_box, (m_rotation * 57.2957795131) + 90, NULL, SDL_FLIP_NONE);
-}
-
-void Player::move_update()
-{
-	if (abs(m_rotation) >= 6.28318530718f) m_rotation = 0.0f; // 2x pi  = 0
-
-	m_position = Vector2f(cos(m_rotation) * m_velocity, sin(m_rotation) * m_velocity) + m_position;
-	m_render_box = { m_position.getX(), m_position.getY(), m_size.getX(), m_size.getY() };
-
-}
-
-void Player::collision()
-{
-
-}*/
 
 void Player::lvlup()
 {
