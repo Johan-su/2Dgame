@@ -103,7 +103,6 @@ void Game::render()
 
 	SDL_RenderCopyF(renderer, texture, NULL, NULL);
 
-
 	for (Effect* e : effect_list)
 	{
 		e->render();
